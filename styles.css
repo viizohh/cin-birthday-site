@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    min-height: 100vh;
+    position: relative;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.home-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: #000000;
+    text-decoration: none;
+    font-size: 16px;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+}
+
+.home-link:hover {
+    opacity: 0.7;
+}
+
+.card-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color: #000000;
+    text-decoration: none;
+    font-size: 16px;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+}
+
+.card-link:hover {
+    opacity: 0.7;
+}
+
+#birthday-text {
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 30px;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+#birthday-text.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.main-image {
+    max-width: 75px;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.main-image:hover {
+    transform: scale(1.05);
+}
+
+.main-image.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gallery-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 800px;
+    opacity: 1;
+}
+
+.gallery-list.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.gallery-list.fade-in {
+    display: flex;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gallery-item {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover {
+    opacity: 0.7;
+}
+
+.gallery-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 150px;
+}
+
+.gallery-number {
+    font-size: 14px;
+    color: #000000;
+    opacity: 0.6;
+}
+
+.gallery-title {
+    font-size: 18px;
+    color: #000000;
+}
+
+.gallery-thumb {
+    max-width: 150px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.expanded-view {
+    position: fixed;
+    top: 100px;
+    left: 50px;
+    max-width: 400px;
+    z-index: 50;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.expanded-view.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.expanded-view.fade-in {
+    display: flex;
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #000000;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: left;
+    transition: opacity 0.3s ease;
+}
+
+.back-button:hover {
+    opacity: 0.7;
+}
+
+.expanded-image {
+    width: 100%;
+    max-height: 400px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.expanded-text {
+    max-width: 500px;
+    line-height: 1.6;
+    color: #000000;
+    font-size: 14px;
+    display: block;
+}
+
+.card-image {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+    border-radius: 4px;
+}
+
+.card-message {
+    max-width: 500px;
+    text-align: center;
+}
+
+.card-message p {
+    line-height: 1.6;
+    color: #000000;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .main-image {
+        max-width: 100px;
+    }
+
+    .gallery-thumb {
+        max-width: 100px;
+    }
+
+    .gallery-meta {
+        min-width: 100px;
+    }
+
+    .gallery-title {
+        font-size: 16px;
+    }
+
+    .expanded-view {
+        top: 80px;
+        left: 20px;
+        max-width: calc(100% - 40px);
+    }
+
+    .expanded-image {
+        max-width: 100%;
+    }
+
+    #birthday-text {
+        font-size: 20px;
+    }
+
+    .card-image {
+        max-width: 100%;
+    }
+
+    .card-message {
+        max-width: 100%;
+    }
+
+    .card-message p {
+        font-size: 14px;
+    }
+}

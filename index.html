@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Cin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="index.html" class="home-link">home</a>
+    <a href="card.html" class="card-link">card</a>
+
+    <div class="container">
+        <h1 id="birthday-text">happy birthday cin</h1>
+        <img src="images/RenderedImage.jpeg" alt="Birthday" id="main-image" class="main-image">
+
+        <div id="gallery-list" class="gallery-list hidden">
+            <div class="gallery-item" data-full="cin1.jpeg" data-number="01" data-title="Medieval" data-text="this day was so perfect, i had so much fun spending time with you and feeling noticed by you made me think about it for days and when we went into the garden I couldnt stop looking at you and thinking how did I manage to convince you to want to spend time with me i wish the day lasted another 20 hours">
+                <div class="gallery-meta">
+                    <span class="gallery-number">01</span>
+                    <span class="gallery-title">Medieval</span>
+                </div>
+                <img src="images/cin1.jpeg" alt="Medieval" class="gallery-thumb">
+            </div>
+            <div class="gallery-item" data-full="cin2.jpeg" data-number="02" data-title="Halloween" data-text="this was the first time I actually went shopping in a halloween store with someone that wasnt my mom when I was a kid and i can't describe how fun it was to me especially knowing you were right there the whole time. I wish I bought that mask for you to wear so I could photoshop you bowling with it on">
+                <div class="gallery-meta">
+                    <span class="gallery-number">02</span>
+                    <span class="gallery-title">Halloween</span>
+                </div>
+                <img src="images/cin2.jpeg" alt="Halloween" class="gallery-thumb">
+            </div>
+            <div class="gallery-item" data-full="cin3.jpeg" data-number="03" data-title="pidgeon" data-text="this was one of the best days I have had in the past decade and you were the main reason, the birds come a close second but i would not have done it without you by my side. i really want to go back and do it again with you and slowly build our own colony of pidgeons and then name them all">
+                <div class="gallery-meta">
+                    <span class="gallery-number">03</span>
+                    <span class="gallery-title">pidgeon</span>
+                </div>
+                <img src="images/cin3.jpeg" alt="pidgeon" class="gallery-thumb">
+            </div>
+        </div>
+
+        <div id="expanded-view" class="expanded-view hidden">
+            <button id="back-button" class="back-button">← back</button>
+            <img id="expanded-image" src="" alt="" class="expanded-image">
+            <div class="expanded-text">
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
