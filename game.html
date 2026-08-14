@@ -128,8 +128,11 @@
             <button class="restart-button" onclick="startGame()">start game</button>
         </div>
 
-        <div class="score-display game-active hidden">score: <span id="score">0</span></div>
+        <div class="score-display game-active hidden">score: <span id="score">0</span> | level: <span id="level">1</span></div>
         <div class="cut-indicator game-active hidden">cut at line: <span id="target-line">1</span></div>
+        <div class="score-display game-active hidden" style="font-size: 24px; color: #ff0000; font-weight: bold;">
+            time: <span id="timer">3.0</span>s
+        </div>
 
         <div class="tree-display" id="tree-display"></div>
 
@@ -147,28 +150,30 @@
         let gameActive = false;
         let gameInterval = null;
         let timeoutTimer = null;
+        let timerInterval = null;
+        let timeRemaining = 3.0;
         let currentSpeed = 3000; // milliseconds
         const minSpeed = 800;
         const speedDecrease = 200;
 
         const treeTemplates = [
             [
-                "    ████████    ",
-                "   ██████████   ",
-                "  ████████████  ",
-                " ██████████████ "
+                "     /\\\\\\\\\\     ",
+                "    /  ◆◆  \\    ",
+                "   /◆◆◆◆◆◆\\   ",
+                "     ||||      "
             ],
             [
-                "   ██████████   ",
-                "  ████████████  ",
-                " ██████████████ ",
-                "████████████████"
+                "    ^^//\\^^    ",
+                "   /◇◇◇◇◇\\   ",
+                "  /◆◆◆◆◆◆◆\\  ",
+                "     ||||||     "
             ],
             [
-                "  ████████████  ",
-                " ██████████████ ",
-                "████████████████",
-                " ██████████████ "
+                "    ///\\\\\\\\    ",
+                "   /◆◆ ◆◆\\   ",
+                "  /◆◆◆◆◆◆\\  ",
+                "    ||||||     "
             ]
         ];
 
@@ -219,12 +224,33 @@
             if (lineNum === targetLine) {
                 score++;
                 document.getElementById('score').textContent = score;
+                document.getElementById('level').textContent = Math.floor(score / 3) + 1;
 
                 // Increase difficulty
                 currentSpeed = Math.max(minSpeed, currentSpeed - speedDecrease);
 
                 nextLog();
             } else {
+                endGame();
+            }
+        }
+
+        function updateTimer() {
+            if (!gameActive) return;
+
+            timeRemaining -= 0.1;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = Math.max(0, timeRemaining).toFixed(1);
+
+            // Visual feedback when time running low
+            if (timeRemaining < 1.0) {
+                timerElement.style.color = '#ff0000';
+                timerElement.style.fontSize = '32px';
+            } else if (timeRemaining < 2.0) {
+                timerElement.style.color = '#ff6600';
+            }
+
+            if (timeRemaining <= 0) {
                 endGame();
             }
         }
@@ -250,6 +276,16 @@
         function nextLog() {
             if (!gameActive) return;
 
+            // Reset timer for this log
+            clearInterval(timerInterval);
+            timeRemaining = currentSpeed / 1000;
+            document.getElementById('timer').textContent = timeRemaining.toFixed(1);
+            document.getElementById('timer').style.color = '#ff0000';
+            document.getElementById('timer').style.fontSize = '24px';
+
+            // Start countdown
+            timerInterval = setInterval(updateTimer, 100);
+
             displayTree();
 
             timeoutTimer = setTimeout(() => {
@@ -263,6 +299,7 @@
             gameActive = false;
             clearTimeout(timeoutTimer);
             clearInterval(gameInterval);
+            clearInterval(timerInterval);
 
             document.getElementById('final-score').textContent = score;
             document.getElementById('game-over').classList.add('show');
@@ -279,12 +316,18 @@
             selectedLine = 1;
 
             document.getElementById('score').textContent = score;
+            document.getElementById('level').textContent = '1';
             document.getElementById('game-over').classList.remove('show');
 
             const activeElements = document.querySelectorAll('.game-active');
             activeElements.forEach(el => el.classList.remove('hidden'));
 
             document.querySelector('.instructions').classList.add('hidden');
+
+            // Start timer
+            timeRemaining = currentSpeed / 1000;
+            document.getElementById('timer').textContent = timeRemaining.toFixed(1);
+            timerInterval = setInterval(updateTimer, 100);
 
             displayTree();
 
