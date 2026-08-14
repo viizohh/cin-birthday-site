@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Cutter Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .tree-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            line-height: 1.4;
+            white-space: pre;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tree-log {
+            position: relative;
+        }
+
+        .tree-line {
+            cursor: pointer;
+            padding: 5px 10px;
+            margin: 2px 0;
+            transition: background-color 0.2s ease;
+        }
+
+        .tree-line:hover {
+            background-color: #f0f0f0;
+        }
+
+        .tree-line.selected {
+            background-color: #ffff00;
+        }
+
+        .cut-indicator {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .game-over {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .game-over.show {
+            display: flex;
+        }
+
+        .restart-button {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .restart-button:hover {
+            opacity: 0.7;
+        }
+
+        .instructions {
+            text-align: center;
+            max-width: 400px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .game-active {
+            display: block;
+        }
+
+        .game-active.hidden {
+            display: none;
+        }
+
+        @media (max-width: 400px) {
+            .tree-display {
+                font-size: 16px;
+            }
+            .game-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-link">home</a>
+
+    <div class="game-container">
+        <h1 class="game-title">axe master</h1>
+
+        <div class="instructions game-active">
+            <p>cut the trees at the indicated line number (1-4)</p>
+            <p>use arrow keys + enter or click with mouse</p>
+            <p>trees get faster as you go!</p>
+            <button class="restart-button" onclick="startGame()">start game</button>
+        </div>
+
+        <div class="score-display game-active hidden">score: <span id="score">0</span></div>
+        <div class="cut-indicator game-active hidden">cut at line: <span id="target-line">1</span></div>
+
+        <div class="tree-display" id="tree-display"></div>
+
+        <div class="game-over" id="game-over">
+            <h2>game over!</h2>
+            <p class="score-display">final score: <span id="final-score">0</span></p>
+            <button class="restart-button" onclick="startGame()">play again</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let targetLine = 1;
+        let selectedLine = 1;
+        let gameActive = false;
+        let gameInterval = null;
+        let timeoutTimer = null;
+        let currentSpeed = 3000; // milliseconds
+        const minSpeed = 800;
+        const speedDecrease = 200;
+
+        const treeTemplates = [
+            [
+                "    ████████    ",
+                "   ██████████   ",
+                "  ████████████  ",
+                " ██████████████ "
+            ],
+            [
+                "   ██████████   ",
+                "  ████████████  ",
+                " ██████████████ ",
+                "████████████████"
+            ],
+            [
+                "  ████████████  ",
+                " ██████████████ ",
+                "████████████████",
+                " ██████████████ "
+            ]
+        ];
+
+        function getRandomTree() {
+            return treeTemplates[Math.floor(Math.random() * treeTemplates.length)];
+        }
+
+        function getRandomTargetLine() {
+            return Math.floor(Math.random() * 4) + 1;
+        }
+
+        function displayTree() {
+            const tree = getRandomTree();
+            targetLine = getRandomTargetLine();
+            selectedLine = 1;
+
+            document.getElementById('target-line').textContent = targetLine;
+
+            const treeDisplay = document.getElementById('tree-display');
+            treeDisplay.innerHTML = '';
+
+            const treeLog = document.createElement('div');
+            treeLog.className = 'tree-log';
+
+            tree.forEach((line, index) => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'tree-line';
+                lineDiv.setAttribute('data-line', index + 1);
+                lineDiv.textContent = line;
+
+                if (index + 1 === selectedLine) {
+                    lineDiv.classList.add('selected');
+                }
+
+                lineDiv.addEventListener('click', () => handleLineCut(index + 1));
+
+                treeLog.appendChild(lineDiv);
+            });
+
+            treeDisplay.appendChild(treeLog);
+        }
+
+        function handleLineCut(lineNum) {
+            if (!gameActive) return;
+
+            clearTimeout(timeoutTimer);
+
+            if (lineNum === targetLine) {
+                score++;
+                document.getElementById('score').textContent = score;
+
+                // Increase difficulty
+                currentSpeed = Math.max(minSpeed, currentSpeed - speedDecrease);
+
+                nextLog();
+            } else {
+                endGame();
+            }
+        }
+
+        function updateSelection(direction) {
+            if (!gameActive) return;
+
+            const lines = document.querySelectorAll('.tree-line');
+            lines.forEach(line => line.classList.remove('selected'));
+
+            if (direction === 'up') {
+                selectedLine = Math.max(1, selectedLine - 1);
+            } else if (direction === 'down') {
+                selectedLine = Math.min(4, selectedLine + 1);
+            }
+
+            const selectedElement = document.querySelector(`[data-line="${selectedLine}"]`);
+            if (selectedElement) {
+                selectedElement.classList.add('selected');
+            }
+        }
+
+        function nextLog() {
+            if (!gameActive) return;
+
+            displayTree();
+
+            timeoutTimer = setTimeout(() => {
+                if (gameActive) {
+                    endGame();
+                }
+            }, currentSpeed);
+        }
+
+        function endGame() {
+            gameActive = false;
+            clearTimeout(timeoutTimer);
+            clearInterval(gameInterval);
+
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('game-over').classList.add('show');
+            document.getElementById('tree-display').innerHTML = '';
+
+            const activeElements = document.querySelectorAll('.game-active');
+            activeElements.forEach(el => el.classList.add('hidden'));
+        }
+
+        function startGame() {
+            score = 0;
+            currentSpeed = 3000;
+            gameActive = true;
+            selectedLine = 1;
+
+            document.getElementById('score').textContent = score;
+            document.getElementById('game-over').classList.remove('show');
+
+            const activeElements = document.querySelectorAll('.game-active');
+            activeElements.forEach(el => el.classList.remove('hidden'));
+
+            document.querySelector('.instructions').classList.add('hidden');
+
+            displayTree();
+
+            timeoutTimer = setTimeout(() => {
+                if (gameActive) {
+                    endGame();
+                }
+            }, currentSpeed);
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (!gameActive) {
+                if (e.key === 'Enter') {
+                    startGame();
+                }
+                return;
+            }
+
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                updateSelection('up');
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                updateSelection('down');
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                handleLineCut(selectedLine);
+            }
+        });
+
+        // Touch support for mobile
+        let touchStartY = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    updateSelection('up');
+                } else {
+                    updateSelection('down');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
