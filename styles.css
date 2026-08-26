@@ -241,6 +241,66 @@ body {
     font-size: 16px;
 }
 
+.word-of-day {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 100;
+    max-width: 250px;
+}
+
+.wod-toggle {
+    background: none;
+    border: 2px solid #000000;
+    color: #000000;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.wod-toggle:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.wod-toggle.expanded {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.wod-content {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-top: none;
+    padding: 16px;
+    margin-top: 0;
+    border-radius: 0 0 4px 4px;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.wod-content.hidden {
+    display: none;
+}
+
+.wod-word {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #000000;
+    font-style: italic;
+}
+
+.wod-definition {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #000000;
+}
+
 @media (max-width: 768px) {
     .main-image {
         max-width: 100px;

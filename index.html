@@ -48,6 +48,33 @@
         </div>
     </div>
 
+    <div id="word-of-day" class="word-of-day">
+        <button id="wod-toggle" class="wod-toggle">word of the day</button>
+        <div id="wod-content" class="wod-content hidden">
+            <div class="wod-word" id="wod-word"></div>
+            <div class="wod-definition" id="wod-definition"></div>
+        </div>
+    </div>
+
+    <script src="words.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Word of the day functionality
+        const wodToggle = document.getElementById('wod-toggle');
+        const wodContent = document.getElementById('wod-content');
+        const wodWord = document.getElementById('wod-word');
+        const wodDefinition = document.getElementById('wod-definition');
+
+        // Set today's word
+        const todayWord = getWordOfDay();
+        wodWord.textContent = todayWord.word;
+        wodDefinition.textContent = todayWord.definition;
+
+        // Toggle word display
+        wodToggle.addEventListener('click', () => {
+            wodContent.classList.toggle('hidden');
+            wodToggle.classList.toggle('expanded');
+        });
+    </script>
 </body>
 </html>
