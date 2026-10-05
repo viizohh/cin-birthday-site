@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moss & Lichen Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="moss-gallery-page">
+    <a href="index.html" class="moss-home-link">← back</a>
+
+    <div class="moss-container">
+        <h1 class="moss-title">moss & lichen</h1>
+        <p class="moss-subtitle">photographs from my trip</p>
+
+        <div class="moss-grid">
+            <!-- Moss photos will be loaded here -->
+            <div class="moss-item" data-src="images/moss/IMG_3109.jpeg">
+                <img src="images/moss/IMG_3109.jpeg" alt="Moss photograph 1" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3110.jpeg">
+                <img src="images/moss/IMG_3110.jpeg" alt="Moss photograph 2" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3111.jpeg">
+                <img src="images/moss/IMG_3111.jpeg" alt="Moss photograph 3" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3112.jpeg">
+                <img src="images/moss/IMG_3112.jpeg" alt="Moss photograph 4" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3193.jpeg">
+                <img src="images/moss/IMG_3193.jpeg" alt="Moss photograph 5" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3227.jpeg">
+                <img src="images/moss/IMG_3227.jpeg" alt="Moss photograph 6" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3228.jpeg">
+                <img src="images/moss/IMG_3228.jpeg" alt="Moss photograph 7" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3348.jpeg">
+                <img src="images/moss/IMG_3348.jpeg" alt="Moss photograph 8" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3351.jpeg">
+                <img src="images/moss/IMG_3351.jpeg" alt="Moss photograph 9" loading="lazy">
+            </div>
+            <div class="moss-item" data-src="images/moss/IMG_3352.jpeg">
+                <img src="images/moss/IMG_3352.jpeg" alt="Moss photograph 10" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="moss-lightbox" class="moss-lightbox">
+        <button class="moss-lightbox-close" aria-label="Close lightbox">&times;</button>
+        <img id="moss-lightbox-img" src="" alt="Full size moss photograph">
+        <button class="moss-lightbox-prev" aria-label="Previous photo">‹</button>
+        <button class="moss-lightbox-next" aria-label="Next photo">›</button>
+    </div>
+
+    <script src="moss-gallery.js"></script>
+</body>
+</html>
