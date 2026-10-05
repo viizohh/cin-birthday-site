@@ -336,61 +336,54 @@ body {
     background-color: transparent;
 }
 
-/* Patch positioning - scattered organically around edges */
+/* Patch positioning - randomly scattered across page */
 .moss-patch-1 {
-    top: 5px;
-    left: 3px;
-    width: 70px;
-    height: 70px;
-}
-
-.moss-patch-2 {
-    top: 20%;
-    right: 2%;
-    width: 60px;
-    height: 60px;
-}
-
-.moss-patch-3 {
-    bottom: 30%;
-    left: 1%;
-    width: 80px;
-    height: 80px;
-}
-
-.moss-patch-4 {
-    bottom: 10%;
-    right: 5%;
+    top: 12%;
+    left: 18%;
     width: 65px;
     height: 65px;
 }
 
-.moss-patch-5 {
-    top: 50%;
-    right: 1%;
+.moss-patch-2 {
+    top: 45%;
+    right: 25%;
     width: 55px;
     height: 55px;
 }
 
-.moss-patch-6 {
-    top: 35%;
-    left: 2%;
+.moss-patch-3 {
+    bottom: 35%;
+    left: 8%;
+    width: 75px;
+    height: 75px;
+}
+
+.moss-patch-4 {
+    bottom: 15%;
+    right: 40%;
+    width: 60px;
+    height: 60px;
+}
+
+.moss-patch-5 {
+    top: 65%;
+    left: 45%;
     width: 50px;
     height: 50px;
 }
 
-.moss-patch-7 {
-    bottom: 50%;
-    right: 3%;
+.moss-patch-6 {
+    top: 28%;
+    right: 12%;
     width: 70px;
     height: 70px;
 }
 
-.moss-patch-8 {
-    bottom: 3%;
-    left: 4%;
-    width: 60px;
-    height: 60px;
+.moss-patch-7 {
+    bottom: 55%;
+    left: 62%;
+    width: 58px;
+    height: 58px;
 }
 
 /* Moss Gallery Styles */
@@ -600,45 +593,54 @@ body {
         font-size: 14px;
     }
 
-    /* Moss patches - smaller on mobile */
+    /* Moss patches - smaller and repositioned on mobile */
     .moss-patch-1 {
-        width: 50px;
-        height: 50px;
-    }
-
-    .moss-patch-2 {
+        top: 10%;
+        left: 5%;
         width: 45px;
         height: 45px;
     }
 
+    .moss-patch-2 {
+        top: 35%;
+        right: 8%;
+        width: 40px;
+        height: 40px;
+    }
+
     .moss-patch-3 {
-        width: 60px;
-        height: 60px;
+        bottom: 40%;
+        left: 12%;
+        width: 55px;
+        height: 55px;
     }
 
     .moss-patch-4 {
+        bottom: 20%;
+        right: 15%;
         width: 48px;
         height: 48px;
     }
 
     .moss-patch-5 {
-        width: 42px;
-        height: 42px;
-    }
-
-    .moss-patch-6 {
+        top: 55%;
+        left: 35%;
         width: 38px;
         height: 38px;
     }
 
-    .moss-patch-7 {
-        width: 52px;
-        height: 52px;
+    .moss-patch-6 {
+        top: 22%;
+        right: 20%;
+        width: 50px;
+        height: 50px;
     }
 
-    .moss-patch-8 {
-        width: 46px;
-        height: 46px;
+    .moss-patch-7 {
+        bottom: 50%;
+        left: 50%;
+        width: 42px;
+        height: 42px;
     }
 
     /* Moss gallery mobile */
