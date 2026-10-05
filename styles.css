@@ -311,6 +311,7 @@ body {
     overflow: hidden;
     transition: all 0.3s ease;
     opacity: 0.75;
+    background-color: transparent;
 }
 
 .moss-patch:hover {
@@ -332,6 +333,7 @@ body {
     height: 100%;
     display: block;
     object-fit: cover;
+    background-color: transparent;
 }
 
 /* Patch positioning - scattered organically around edges */
